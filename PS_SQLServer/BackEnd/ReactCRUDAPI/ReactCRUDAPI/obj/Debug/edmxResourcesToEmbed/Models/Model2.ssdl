@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CRUD.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="MainPOC" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="TacticalPOC" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="OperativePOC" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'test-leoncio.dbo.Projects' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Projects">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="IdClient" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="EndDate" />
+      <PropertyRef Name="SowID" />
+      <PropertyRef Name="AmountSigned" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="IdClient" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="SowID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AmountSigned" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="CRUDStoreContainer">
+    <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Projects" EntityType="Self.Projects" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Projects].[Id] AS [Id], 
+    [Projects].[IdClient] AS [IdClient], 
+    [Projects].[Name] AS [Name], 
+    [Projects].[StartDate] AS [StartDate], 
+    [Projects].[EndDate] AS [EndDate], 
+    [Projects].[SowID] AS [SowID], 
+    [Projects].[AmountSigned] AS [AmountSigned]
+    FROM [dbo].[Projects] AS [Projects]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>
